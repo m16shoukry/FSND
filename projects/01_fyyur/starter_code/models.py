@@ -8,7 +8,6 @@ migrate = Migrate(app, db)
 
 class Venue(db.Model):
     __tablename__ = 'Venue'
-
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     genres = db.Column(db.PickleType, nullable=False)
@@ -26,7 +25,6 @@ class Venue(db.Model):
 
 class Artist(db.Model):
     __tablename__ = 'Artist'
-
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     city = db.Column(db.String(120), nullable=False)
@@ -40,12 +38,10 @@ class Artist(db.Model):
     facebook_link = db.Column(db.String(120))
     shows = db.relationship('Show', backref='artist', lazy='dynamic')
 
-    def __repr__(self):
-      return f'<Artist {self.id} {self.name}>'
+
 
 class Show(db.Model):
     __tablename__ = 'Show'
-
     id = db.Column(db.Integer, primary_key=True)
     artist_id = db.Column(db.Integer, db.ForeignKey('Artist.id'), nullable=False)  
     venue_id = db.Column(db.Integer, db.ForeignKey('Venue.id'), nullable=False)
