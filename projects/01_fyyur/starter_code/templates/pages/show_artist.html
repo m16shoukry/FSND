@@ -43,6 +43,11 @@
 		<img src="{{ artist.image_link }}" alt="Venue Image" />
 	</div>
 </div>
+
+<div>
+	<button onclick={{delete_artist(Artist.artist_id)}}>Delete</button>
+	<button onclick={{edit_artist(Artist.artist_id)}}>Edit</button> 
+</div>
 <section>
 	<h2 class="monospace">{{ artist.upcoming_shows_count }} Upcoming {% if artist.upcoming_shows_count == 1 %}Show{% else %}Shows{% endif %}</h2>
 	<div class="row">

@@ -1,14 +1,24 @@
 from datetime import datetime
 from flask_wtf import Form
-from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField
+from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField, TextAreaField, BooleanField
 from wtforms.validators import DataRequired, AnyOf, URL
+
+
+
+def validate_phone(self, phone):
+    us_phone_num = '^( [0-9]{3} ) [-] [0-9]{3} [-] [0-9]{4}$'
+    match = re.search(us_phone_num, phone.DataRequired)
+    if not match:
+        raise ValidationError('Error, phone number must be in format ***-***-****') 
 
 class ShowForm(Form):
     artist_id = StringField(
-        'artist_id'
+        'artist_id',
+        validators=[DataRequired()]
     )
     venue_id = StringField(
-        'venue_id'
+        'venue_id',
+        validators=[DataRequired()]
     )
     start_time = DateTimeField(
         'start_time',
@@ -83,7 +93,7 @@ class VenueForm(Form):
         'address', validators=[DataRequired()]
     )
     phone = StringField(
-        'phone'
+        'phone', validators=[DataRequired(), validate_phone]
     )
     image_link = StringField(
         'image_link'
@@ -113,8 +123,20 @@ class VenueForm(Form):
             ('Other', 'Other'),
         ]
     )
+    seeking_description = TextAreaField(
+        'seeking_description',  
+    )
+    seeking_talent = BooleanField(
+        'seeking_talent', 
+    ) 
     facebook_link = StringField(
         'facebook_link', validators=[URL()]
+    )
+    image_link = StringField(
+        'image_link'
+    )
+    website = StringField(
+        'website'
     )
 
 class ArtistForm(Form):
@@ -123,6 +145,9 @@ class ArtistForm(Form):
     )
     city = StringField(
         'city', validators=[DataRequired()]
+    )
+    address = StringField(
+        'address', validators=[DataRequired()]
     )
     state = SelectField(
         'state', validators=[DataRequired()],
@@ -182,7 +207,7 @@ class ArtistForm(Form):
     )
     phone = StringField(
         # TODO implement validation logic for state
-        'phone'
+        'phone', validators=[DataRequired(), validate_phone]
     )
     image_link = StringField(
         'image_link'
@@ -212,9 +237,26 @@ class ArtistForm(Form):
             ('Other', 'Other'),
         ]
     )
+    seeking_description = TextAreaField(
+        'seeking_description',  
+    )
+    seeking_venue = BooleanField(
+        'seeking_venue', 
+    ) 
     facebook_link = StringField(
         # TODO implement enum restriction
         'facebook_link', validators=[URL()]
     )
+    image_link = StringField(
+        'image_link'
+    )
+    website = StringField(
+        'website'
+    )
 
 # TODO IMPLEMENT NEW ARTIST FORM AND NEW SHOW FORM
+
+
+
+
+
